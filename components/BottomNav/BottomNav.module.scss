@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.custom_tab {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-items: center;
+  padding: 4px;
+  font-size: $font-small-s;
+}
+
+.bottom_nav {
+  bottom: 0;
+  position: sticky;
+
+  width: 100%;
+  border-top: 1px solid $border-line-gray;
+
+  z-index: 100;
+}
+
+.icon {
+  display: inline-flex;
+  max-height: 15px;
+  margin-bottom: 6px;
+}

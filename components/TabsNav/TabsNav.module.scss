@@ -1,0 +1,38 @@
+@import '../../styles/variables.scss';
+
+.tabs,
+.tab {
+  width: 100%;
+  justify-content: center;
+}
+
+.tabs {
+  cursor: pointer;
+  display: flex;
+  overflow-y: auto;
+  width: 100%;
+  padding: 8px;
+  background: #fff;
+
+  .tab {
+    display: inline-flex;
+    padding: 2px 0;
+
+    > div {
+      display: inline-flex;
+      justify-content: center;
+    }
+
+    + .tab.border {
+      border-left: 1px solid $border-line-gray;
+    }
+
+    &:hover {
+      color: #000;
+    }
+
+    &.active {
+      color: $color-primary !important;
+    }
+  }
+}

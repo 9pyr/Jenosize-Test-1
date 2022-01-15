@@ -1,0 +1,94 @@
+@import 'styles/variables.scss';
+
+.section_date_picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.month_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-small;
+
+  margin-bottom: 10px;
+}
+
+.date_section {
+  width: 100%;
+
+  > .date_body {
+    > div > div {
+      transition: background $animation-speed, border-top-left-radius $animation-speed, border-bottom-left-radius $animation-speed,
+        border-top-right-radius $animation-speed, border-bottom-right-radius $animation-speed;
+    }
+
+    > .week_list > div,
+    &.date_week > div:not(.week_list):hover > div {
+      cursor: pointer;
+      background: $color-primary-opc;
+      &:first-child {
+        border-top-left-radius: 34px;
+        border-bottom-left-radius: 34px;
+      }
+      &:last-child {
+        border-top-right-radius: 34px;
+        border-bottom-right-radius: 34px;
+      }
+    }
+  }
+
+  > .date_title,
+  > .date_body > div {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: $font-small;
+  }
+
+  > .date_title > div {
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+
+    width: 25px;
+    height: 25px;
+  }
+  > .date_body:not(.date_week) > div {
+    &:not(.week_list) > div {
+      &.day_active > div {
+        color: #fff;
+        background: $color-primary !important;
+      }
+
+      &:hover > div {
+        background: $color-primary-opc;
+      }
+    }
+  }
+  > .date_body > div > div {
+    display: flex;
+    justify-content: center;
+
+    &.now_day > div {
+      border: 1px solid $color-primary-opc;
+    }
+    > div {
+      &.not_in_month {
+        color: $color-gray;
+      }
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 4px;
+      border-radius: 50%;
+
+      width: 25px;
+      height: 25px;
+
+      transition: background $animation-speed, color $animation-speed;
+    }
+  }
+}

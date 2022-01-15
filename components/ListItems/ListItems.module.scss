@@ -1,0 +1,113 @@
+@import 'styles/variables.scss';
+
+.list_items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 10px;
+
+  .list_item {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+
+    .index {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-size: $font-small;
+
+      min-width: 20px;
+      min-height: 20px;
+      max-width: 20px;
+      max-height: 20px;
+
+      background: #000;
+      color: #fff;
+      border-radius: 50%;
+    }
+    .item {
+      display: flex;
+      padding: 4px 6px;
+      margin-left: 8px;
+      border: 1px solid $border-line-gray;
+      border-radius: $radius-card;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+
+      .icon_listItems_profile {
+        width: 50px;
+
+        path {
+          fill: $color-gray;
+        }
+      }
+
+      > div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+
+        > div {
+          display: flex;
+          align-items: center;
+
+          &:first-child > span:first-child {
+            font-weight: bold;
+            margin-right: 4px;
+          }
+
+          > span:nth-child(2) {
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+
+          + div {
+            margin-top: 4px;
+          }
+        }
+
+        .icon_listItems {
+          width: 10px;
+          margin-right: 4px;
+
+          path {
+            fill: #000;
+          }
+        }
+      }
+      > div:nth-child(3) {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+
+        border-left: 1px solid $border-line-gray;
+        min-width: 100px;
+        max-width: 100px;
+
+        span {
+          white-space: nowrap;
+          margin-left: 4px;
+          color: $color-gray;
+        }
+
+        .icon_listItems {
+          width: 15px;
+
+          path {
+            fill: $color-primary;
+          }
+        }
+      }
+
+      > div:nth-child(2),
+      > div:nth-child(3) {
+        font-size: $font-small-s;
+        margin: 4px 6px;
+      }
+    }
+  }
+}

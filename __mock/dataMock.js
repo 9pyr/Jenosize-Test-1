@@ -1,0 +1,55 @@
+const posts = [
+  {
+    name: 'Johnson Walker',
+    position: 'Graphic Designer',
+    company: 'True Cob',
+    count_likes: 20,
+    count_comments: 2,
+    count_points: 10,
+    count_diamonds: 1,
+    update_date: '2022-01-01',
+  },
+  {
+    name: 'James Hames',
+    position: 'Developer',
+    company: 'Ail',
+    count_likes: 14,
+    count_comments: 10,
+    count_points: 11,
+    count_diamonds: 5,
+    update_date: '2022-01-03',
+  },
+  {
+    name: 'Somsak Sukjai',
+    position: 'Graphic Designer',
+    company: 'BitHup',
+    count_likes: 22,
+    count_comments: 1,
+    count_points: 98,
+    count_diamonds: 1,
+    update_date: '2022-01-07',
+  },
+  {
+    name: 'Somsak Sukjai',
+    position: 'Graphic Designer',
+    company: 'mata what',
+    count_likes: 19,
+    count_comments: 2,
+    count_points: 22,
+    count_diamonds: 2,
+    update_date: '2022-01-08',
+  },
+  {
+    name: 'Somsak Sukjai',
+    position: 'Graphic Designer',
+    company: 'BiNance',
+    count_likes: 25,
+    count_comments: 0,
+    count_points: 10,
+    count_diamonds: 5,
+    update_date: '2022-01-12',
+  },
+]
+
+const dataMock = { posts }
+export default dataMock
