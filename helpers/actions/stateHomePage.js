@@ -1,10 +1,13 @@
+import dayjs from 'dayjs'
 import { createSlice } from '@reduxjs/toolkit'
+import { constantFormatDate } from 'helpers/constants'
 
 const contextEngagement = createSlice({
   name: 'date_tab',
   initialState: {
     view: 'graph',
     tab: 'daily',
+    date: dayjs().format(constantFormatDate.default),
   },
   reducers: {
     changeTab: (state, action) => {
@@ -13,8 +16,11 @@ const contextEngagement = createSlice({
     changeView: (state, action) => {
       state.view = action.payload
     },
+    changeDate: (state, action) => {
+      state.date = action.payload
+    },
   },
 })
 
-export const { changeTab, changeView } = contextEngagement.actions
+export const { changeTab, changeView, changeDate } = contextEngagement.actions
 export default contextEngagement

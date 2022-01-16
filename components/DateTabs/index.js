@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { constantFormatDate, constantTab, constantView } from 'helpers/constants'
 import { faExternalLinkAlt, faChartBar, faList, faAngleDown, faLongArrowAltDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
-const DateTabs = ({ value, onTabsChange, onViewChange }) => {
+const DateTabs = ({ value, onTabsChange, onViewChange, onDateChange }) => {
   const dateSectionRef = useRef()
 
   const [dateSelect, setDateSelect] = useState(dayjs().format(constantFormatDate.default))
@@ -22,6 +22,9 @@ const DateTabs = ({ value, onTabsChange, onViewChange }) => {
   }
   const handleViewChange = (typeName) => {
     typeof onViewChange === 'function' && onViewChange(typeName)
+  }
+  const handleDateChange = (date) => {
+    typeof onDateChange === 'function' && onDateChange(date)
   }
 
   return (
@@ -53,10 +56,17 @@ const DateTabs = ({ value, onTabsChange, onViewChange }) => {
               value={dateSelect}
               onChange={(date) => {
                 setDateSelect(date)
+                handleDateChange(date)
               }}
             />
             <div className={styles.date_today}>
-              <button onClick={() => setDateSelect(dayjs().format(constantFormatDate.default))}>
+              <button
+                onClick={() => {
+                  const dateToday = dayjs().format(constantFormatDate.default)
+                  setDateSelect(dateToday)
+                  handleDateChange(dateToday)
+                }}
+              >
                 <FontAwesomeIcon icon={faLongArrowAltDown} className={styles.icon_dateTabs} />
                 Today
               </button>
@@ -69,6 +79,7 @@ const DateTabs = ({ value, onTabsChange, onViewChange }) => {
                 onChange={(date) => {
                   console.log(date)
                   setDateSelect(date)
+                  handleDateChange(date)
                 }}
               />
             ) : (
@@ -76,8 +87,9 @@ const DateTabs = ({ value, onTabsChange, onViewChange }) => {
                 viewTab={value.tab}
                 value={dateSelect}
                 onChange={(date) => {
-                  console.log(date)
+                  console.log('🔥 datepicker', { date })
                   setDateSelect(date)
+                  handleDateChange(date)
                 }}
               />
             )}

@@ -6,9 +6,9 @@ import TabsNav from '../TabsNav'
 
 const BottomNav = () => {
   return (
-    <div className={styles.bottom_nav}>
-      <TabsNav classNameItem={styles.custom_tab} dataSource={routeList} />
-    </div>
+    <nav className={styles.bottom_nav}>
+      <TabsNav className={styles.bottom_div} classNameItem={styles.custom_tab} dataSource={routeList} />
+    </nav>
   )
 }
 

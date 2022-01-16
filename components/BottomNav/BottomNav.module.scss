@@ -8,10 +8,12 @@
   padding: 4px;
   font-size: $font-small-s;
 }
-
 .bottom_nav {
+  margin-top: 60px;
+}
+.bottom_div {
   bottom: 0;
-  position: sticky;
+  position: fixed;
 
   width: 100%;
   border-top: 1px solid $border-line-gray;

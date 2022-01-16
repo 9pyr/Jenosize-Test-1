@@ -1,4 +1,4 @@
-import styles from 'styles/Home.module.scss'
+import styles from 'styles/pages/Home.module.scss'
 
 import React from 'react'
 import { Card } from 'components'
@@ -7,7 +7,7 @@ import { faThumbsUp, faCommentAlt, faGem } from '@fortawesome/free-regular-svg-i
 import { faGift } from '@fortawesome/free-solid-svg-icons'
 
 const Cards = ({ dataSource }) => {
-  const { countLike, countComment, countPoint, countDiamond } = dataSource
+  const { count_likes, count_comments, count_points, count_diamonds } = dataSource
 
   return (
     <section className={styles.grid}>
@@ -19,7 +19,7 @@ const Cards = ({ dataSource }) => {
           </>
         }
       >
-        <h2>{countLike || 0}</h2>
+        <h2>{count_likes || 0}</h2>
         <p className='text-gray'>Likes</p>
       </Card>
       <Card
@@ -30,7 +30,7 @@ const Cards = ({ dataSource }) => {
           </>
         }
       >
-        <h2>{countComment || 0}</h2>
+        <h2>{count_comments || 0}</h2>
         <p className='text-gray'>Comments</p>
       </Card>
       <Card
@@ -41,7 +41,7 @@ const Cards = ({ dataSource }) => {
           </>
         }
       >
-        <h2>{countPoint || 0}</h2>
+        <h2>{count_points || 0}</h2>
         <p className='text-gray'>Point</p>
       </Card>
       <Card
@@ -52,7 +52,7 @@ const Cards = ({ dataSource }) => {
           </>
         }
       >
-        <h2>{countDiamond || 0}</h2>
+        <h2>{count_diamonds || 0}</h2>
         <p className='text-gray'>Diamond</p>
       </Card>
     </section>

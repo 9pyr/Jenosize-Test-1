@@ -1,4 +1,4 @@
-import styles from 'styles/Home.module.scss'
+import styles from 'styles/pages/Home.module.scss'
 
 import React from 'react'
 import { Line } from '@ant-design/plots'
@@ -8,6 +8,7 @@ const LineChart = ({ dataSource, valueY }) => {
     data: dataSource,
     xField: 'update_date',
     yField: valueY,
+    height: 250,
     point: {
       size: 5,
       style: {
@@ -15,7 +16,6 @@ const LineChart = ({ dataSource, valueY }) => {
       },
     },
     xAxis: { grid: { line: { style: { stroke: '#eaeaea', lineWidth: 1 } } } },
-
     yAxis: { grid: null },
     tooltip: {
       showMarkers: false,

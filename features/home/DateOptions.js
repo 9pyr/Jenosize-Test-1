@@ -1,9 +1,9 @@
-import styles from 'styles/Home.module.scss'
+import styles from 'styles/pages/Home.module.scss'
 
 import React from 'react'
 import { DateTabs } from 'components'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeTab, changeView } from 'helpers/actions/stateHomePage'
+import { changeTab, changeView, changeDate } from 'helpers/actions/stateHomePage'
 
 const DateOptions = () => {
   const store = useSelector((state) => state)
@@ -18,6 +18,9 @@ const DateOptions = () => {
         }}
         onViewChange={(view) => {
           dispatch(changeView(view))
+        }}
+        onDateChange={(date) => {
+          dispatch(changeDate(date))
         }}
       />
     </section>

@@ -35,4 +35,6 @@ export const constantMonthNames = [
 
 export const constantFormatDate = {
   default: 'YYYY-MM-DD',
+  ddmmyyyy_slh: 'DD/MM/YYYY',
+  time: 'hh:MM',
 }

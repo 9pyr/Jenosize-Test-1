@@ -3,6 +3,7 @@ import styles from './DatePicker.module.scss'
 import React, { useEffect, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import { constantDayNames, constantFormatDate, constantTab } from 'helpers/constants'
+import { getDateListInMonth } from 'helpers/constantFunc'
 
 const DatePicker = ({ value: initialValue, onChange, viewTab }) => {
   const dateActiveRef = useRef()
@@ -14,11 +15,8 @@ const DatePicker = ({ value: initialValue, onChange, viewTab }) => {
     dateStr = `${year}-${month + 1}`,
     nonOneDay = [constantTab.weekly].includes(viewTab)
   const onChangeFnc = typeof onChange === 'function' ? onChange : () => {}
-  const dateValueList = []
 
   const [holdOneDay, setHoldOneDay] = useState()
-
-  console.log({ day, month, year })
 
   const handleClickDay = ($year, $month, $day) => {
     if (!nonOneDay) {
@@ -27,124 +25,54 @@ const DatePicker = ({ value: initialValue, onChange, viewTab }) => {
       setHoldOneDay(selectDay)
     }
   }
+
   const renderDays = () => {
     const dayNow = dayjs().date()
-
-    const days = []
-    const dayNowName = dayjs(dateStr).format('dd')
-    const monthForEnd = month + 1
-
-    const dateCheck = ($year, $month, $day) => {
-      return Array.isArray(initialValue)
-        ? initialValue.includes(dayjs(new Date($year, $month, $day)).format(constantFormatDate.default))
-        : day === $day
-    }
-    for (const [index, item] of Object.entries(constantDayNames)) {
-      if (item.dd === dayNowName) break
-
-      let prevMonth = month - 1,
-        prevYear = year
-      if (prevMonth < 0) {
-        prevMonth = 11
-        prevYear = year - 1
-      }
-
-      const prevDay = new Date(prevYear, prevMonth + 1, 0).getDate() - Number(index)
-      const valueCheck = dateCheck(prevYear, prevMonth, prevDay)
-      days.unshift(dayjs(new Date(prevYear, prevMonth, prevDay)).format(constantFormatDate.default))
-      // days.unshift(
-      //   <div
-      //     key={'before-' + index}
-      //     value={dayjs(new Date(prevYear, prevMonth, prevDay)).format(constantFormatDate.default)}
-      //     className={`${dayNow === prevDay ? styles.now_day : ''} ${valueCheck && nonOneDay ? styles.day_active : ''}`}
-      //     onClick={() => {
-      //       handleClickDay(prevYear, prevMonth, prevDay)
-      //     }}
-      //   >
-      //     <div className={styles.not_in_month}>{prevDay}</div>
-      //   </div>
-      // )
-    }
-    for (let dayInx = 1; dayInx <= new Date(year, monthForEnd, 0).getDate(); dayInx++) {
-      const valueCheck = dateCheck(year, month, dayInx)
-      days.push(dayjs(new Date(year, month, dayInx)).format(constantFormatDate.default))
-      // days.push(
-      //   <div
-      //     key={`${month}-${dayInx}`}
-      //     value={dayjs(new Date(year, month, dayInx)).format(constantFormatDate.default)}
-      //     className={`${dayNow === dayInx ? styles.now_day : ''} ${valueCheck ? styles.day_active : ''}`}
-      //     onClick={() => {
-      //       handleClickDay(year, month, dayInx)
-      //     }}
-      //   >
-      //     <div>{dayInx}</div>
-      //   </div>
-      // )
-    }
-
-    const endDayOfM = dayjs(dateStr + `-${new Date(2022, monthForEnd, 0).getDate()}`).format('dd')
-    const endDayOut = constantDayNames.findIndex((item) => item.dd === endDayOfM)
-    for (let index = 0; index < constantDayNames.length - (endDayOut + 1); index++) {
-      let nextMonth = month + 1,
-        nextYear = year
-      if (nextMonth > 11) {
-        nextMonth = 0
-        nextYear = year + 1
-      }
-
-      const nextDay = new Date(nextYear, nextMonth + 1, 1).getDate() + Number(index)
-      const valueCheck = dateCheck(nextYear, nextMonth, nextDay)
-
-      days.push(dayjs(new Date(nextYear, nextMonth, nextDay)).format(constantFormatDate.default))
-      // days.push(
-      //   <div
-      //     key={'after-' + index}
-      //     value={dayjs(new Date(nextYear, nextMonth, nextDay)).format(constantFormatDate.default)}
-      //     className={`${dayNow === nextDay ? styles.now_day : ''} ${valueCheck && nonOneDay ? styles.day_active : ''}`}
-      //     onClick={() => {
-      //       handleClickDay(nextYear, nextMonth, nextDay)
-      //     }}
-      //   >
-      //     <div className={styles.not_in_month}>{nextDay}</div>
-      //   </div>
-      // )
-    }
-
-    let dateElms = [],
-      weekly = false,
-      startDateOfWeek = void 0
+    const monthNow = dayjs().month()
+    const days = getDateListInMonth(year, month)
 
     const createElementDay = (date) => {
       const $date = dayjs(date),
         $year = $date.year(),
         $month = $date.month(),
         $day = $date.date()
-      const valueCheck = dateCheck($year, $month, $day)
+      const inMonth = $month === month
+      const valueCheck = Array.isArray(initialValue)
+        ? initialValue.includes(dayjs(new Date($year, $month, $day)).format(constantFormatDate.default))
+        : day === $day
 
       return (
         <div
-          key={`${$month}-${$day}`}
+          key={`${year}-${$month}-${$day}`}
           value={dayjs(new Date($year, $month, $day)).format(constantFormatDate.default)}
-          className={`${dayNow === $day ? styles.now_day : ''} ${valueCheck && $month === month ? styles.day_active : ''}`}
+          className={`${dayNow === $day && monthNow === $month ? styles.now_day : ''} ${valueCheck && inMonth ? styles.day_active : ''}`}
           onClick={() => {
             handleClickDay($year, $month, $day)
           }}
         >
-          <div className={$month !== month ? styles.not_in_month : ''}>{$day}</div>
+          <div className={!inMonth ? styles.not_in_month : ''}>{$day}</div>
         </div>
       )
     }
+
+    let dateElms = [],
+      weekly = false,
+      startDateOfWeek = void 0
     return days.map((item, index) => {
       const dateElm = createElementDay(item)
 
+      if (dayjs(new Date(year, month, day)).format(constantFormatDate.default) === item && dateElm.props.className.includes(styles.day_active)) {
+        weekly = true
+      }
       if ((index + 1) % 7 === 0) {
         dateElms.push(dateElm)
         const start = startDateOfWeek,
-          end = item
+          end = item,
+          isWeekList = weekly
         const createSection = (
           <div
             key={index}
-            className={viewTab === constantTab.weekly && weekly ? styles.week_list : ''}
+            className={viewTab === constantTab.weekly && isWeekList ? styles.week_list : ''}
             onClick={() => {
               if (nonOneDay) {
                 onChangeFnc([start, end])
@@ -162,9 +90,6 @@ const DatePicker = ({ value: initialValue, onChange, viewTab }) => {
 
         return createSection
       } else {
-        if (dayjs(new Date(year, month, day)).format(constantFormatDate.default) === item && dateElm.props.className.includes(styles.day_active)) {
-          weekly = true
-        }
         if (startDateOfWeek === void 0) {
           startDateOfWeek = item
         }

@@ -1,10 +1,11 @@
 import styles from '../DateTabs.module.scss'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { constantDayNames, constantFormatDate, constantTab } from 'helpers/constants'
+import { getDateListInMonth } from 'helpers/constantFunc'
 
 const DateList = ({ value: initialValue, onChange, viewTab }) => {
   const value = Array.isArray(initialValue) ? dayjs(initialValue[0]) : dayjs(initialValue)
@@ -14,6 +15,8 @@ const DateList = ({ value: initialValue, onChange, viewTab }) => {
     dateStr = `${year}-${month + 1}`,
     nonOneDay = [constantTab.weekly].includes(viewTab)
   const onChangeFnc = typeof onChange === 'function' ? onChange : () => {}
+
+  const [dateValueList, setDateValueList] = useState([])
 
   const getDayLength = () => {
     const dayNow = dayjs().date(),
@@ -65,19 +68,30 @@ const DateList = ({ value: initialValue, onChange, viewTab }) => {
   }
 
   const handleClickPrev = () => {
-    // const prevIndex = valueList.indexOf(initialValue) - 1
-    // console.log(valueList[prevIndex])
-    // if (!nonOneDay) {
-    //   onChangeFnc(valueList[prevIndex])
-    // }
+    if (!nonOneDay) {
+      const prevIndex = dateValueList.indexOf(initialValue) - 1
+      onChangeFnc(dateValueList[prevIndex])
+    } else {
+      const prevIndex = dateValueList.indexOf(initialValue[0]) - 7
+      // console.log('🔥 nonOneDay', { prevIndex, dateStart: dateValueList[prevIndex], dateEnd: dateValueList[prevIndex + 6] })
+      onChangeFnc([dateValueList[prevIndex], dateValueList[prevIndex + 6]])
+    }
   }
   const handleClickNext = () => {
-    // const nextIndex = valueList.indexOf(initialValue) + 1
-    // console.log(valueList[nextIndex])
-    // if (!nonOneDay) {
-    //   onChangeFnc(valueList[nextIndex])
-    // }
+    if (!nonOneDay) {
+      const nextIndex = dateValueList.indexOf(initialValue) + 1
+      onChangeFnc(dateValueList[nextIndex])
+    } else {
+      const nextIndex = dateValueList.indexOf(initialValue[0]) + 8
+      // console.log('🔥 nonOneDay', { nextIndex, dateStart: dateValueList[nextIndex], dateEnd: dateValueList[nextIndex + 7] })
+      onChangeFnc([dateValueList[nextIndex], dateValueList[nextIndex + 6]])
+    }
   }
+
+  useEffect(() => {
+    const holdDateValueList = getDateListInMonth(year, month)
+    setDateValueList(holdDateValueList)
+  }, [dateStr])
 
   return (
     <>

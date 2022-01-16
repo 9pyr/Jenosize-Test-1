@@ -1,6 +1,7 @@
 import styles from './ListItems.module.scss'
 
 import React from 'react'
+import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faCommentAlt, faGift, faGem, faBuilding, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -12,7 +13,12 @@ const ListItems = ({ dataSource, activeType }) => {
         return (
           <div key={index} className={styles.list_item}>
             <div className={styles.index}>{index + 1}</div>
-            <article className={styles.item}>
+            <article
+              className={styles.item}
+              onClick={() => {
+                Router.push(`view-post/${item.id}`)
+              }}
+            >
               <FontAwesomeIcon icon={faUserCircle} className={styles.icon_listItems_profile} />
               <div>
                 <div>

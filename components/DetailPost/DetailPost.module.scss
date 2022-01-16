@@ -1,0 +1,138 @@
+@import 'styles/variables.scss';
+
+.detailPost_styled {
+  overflow: hidden;
+  border-bottom: 1px solid $border-line-gray;
+}
+
+.head_detail,
+.body_detail {
+  padding: 10px;
+}
+.head_detail {
+  display: flex;
+  margin-bottom: 12px;
+
+  .title_detail {
+    display: grid;
+    grid-template-columns: 1fr fit-content(100%);
+    width: 100%;
+    padding: 0 8px;
+
+    > .name,
+    > .position,
+    > .post_date,
+    > .post_time {
+      display: flex;
+      align-items: center;
+    }
+    > .name {
+      font-size: $font-medium;
+    }
+    > .position {
+      font-size: $font-small;
+    }
+    > .post_date,
+    > .post_time {
+      color: $color-gray;
+      justify-self: flex-end;
+    }
+    > .post_date {
+      font-size: $font-small;
+    }
+    > .post_time {
+      font-size: $font-small-s;
+    }
+
+    .icon_detailPost {
+      margin-right: 4px;
+      width: 13px;
+    }
+  }
+}
+.body_detail {
+  padding: 10px;
+  font-size: $font-medium;
+}
+.profile_img {
+  background: #000;
+  border-radius: 34px;
+  min-width: 38px;
+  min-height: 38px;
+  max-width: 38px;
+  max-height: 38px;
+}
+
+.count_detail {
+  display: flex;
+  background: $color-primary-opc;
+  padding: 6px 10px;
+  margin-bottom: 0;
+
+  > li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: $color-gray;
+  }
+  > li + li {
+    border-left: 1px solid $color-gray;
+  }
+  > li,
+  > div {
+    font-size: $font-small;
+  }
+  > button {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    padding: 0 16px;
+    color: $color-primary;
+  }
+
+  .icon_detailPost {
+    margin-left: 4px;
+    min-width: 8px;
+    min-height: 8px;
+    max-width: 8px;
+    max-height: 8px;
+  }
+}
+
+.action_post {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  padding: 20px 0;
+  justify-items: center;
+
+  .button {
+    display: inline-flex;
+    justify-content: center;
+
+    width: 100%;
+    padding: 6px;
+    max-width: 140px;
+    background: $bg-color-button;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+    border-radius: 34px;
+
+    transition: background $animation-speed;
+
+    &:hover {
+      background: $color-primary;
+      color: $txt-color-button-hvr;
+    }
+
+    .icon_detailPost {
+      margin-right: 4px;
+      min-width: 16px;
+      min-height: 16px;
+      max-width: 16px;
+      max-height: 16px;
+    }
+  }
+}
