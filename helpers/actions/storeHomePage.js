@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, configureStore } from '@reduxjs/toolkit'
 import { constantFormatDate } from 'helpers/constants'
 
 const contextEngagement = createSlice({
@@ -23,4 +23,6 @@ const contextEngagement = createSlice({
 })
 
 export const { changeTab, changeView, changeDate } = contextEngagement.actions
-export default contextEngagement
+export default configureStore({
+  reducer: contextEngagement.reducer,
+})

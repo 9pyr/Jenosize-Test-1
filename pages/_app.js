@@ -1,11 +1,11 @@
 import 'styles/globals.scss'
 
-import store from 'helpers/actions/store'
+import storeHomePage from 'helpers/actions/storeHomePage'
 import { Provider } from 'react-redux'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider store={store}>
+    <Provider store={storeHomePage}>
       <Component {...pageProps} />
     </Provider>
   )

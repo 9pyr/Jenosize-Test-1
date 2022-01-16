@@ -2,18 +2,19 @@ import styles from './TopNav.module.scss'
 
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 
-const TopNav = () => {
+const TopNav = ({ title, leftIcon, rightIcon, textLeft, textRight, classNameLeft, classNameRight, onLeftClick, onRightClick }) => {
   return (
     <div className={styles.nav_styled}>
       <nav>
-        <button className={styles.button_fab}>
-          <FontAwesomeIcon icon={faHome} className={styles.icon_nav} />
+        <button className={styles.button_fab} onClick={onLeftClick}>
+          <FontAwesomeIcon icon={leftIcon} className={`${styles.icon_nav} ${classNameLeft || ''}`} />
+          {textLeft}
         </button>
-        <div className={styles.title_nav}>All Report</div>
-        <button className={styles.button_fab}>
-          <FontAwesomeIcon icon={faSlidersH} className={styles.icon_nav} />
+        <div className={styles.title_nav}>{title}</div>
+        <button className={styles.button_fab} onClick={onRightClick}>
+          <FontAwesomeIcon icon={rightIcon} className={`${styles.icon_nav} ${classNameRight || ''}`} />
+          {textRight}
         </button>
       </nav>
     </div>

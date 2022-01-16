@@ -122,6 +122,7 @@
 
     transition: background $animation-speed;
 
+    &.active,
     &:hover {
       background: $color-primary;
       color: $txt-color-button-hvr;

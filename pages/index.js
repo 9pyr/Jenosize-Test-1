@@ -9,6 +9,7 @@ import { constantFormatDate, constantTab } from 'helpers/constants'
 import { tabsNavRouteList } from 'helpers/routesConstant'
 import { useSelector } from 'react-redux'
 import { getPosts } from 'helpers/apis'
+import { faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 
 const sortCountList = (data, activePage) => {
   const fieldCount = `count_${activePage}s`
@@ -24,8 +25,9 @@ const filterList = (data, date) => {
 }
 
 const Home = ({ data = [] }) => {
-  // console.log('🔥', { data })
+  console.log('🔥', { data })
   const store = useSelector((state) => state)
+  console.log({ store })
 
   const [activeType, setActiveType] = useState('like')
   const [values, setValues] = useState([])
@@ -47,7 +49,7 @@ const Home = ({ data = [] }) => {
 
   return (
     <>
-      <TopNav />
+      <TopNav title={'All Report'} leftIcon={faHome} rightIcon={faSlidersH} />
       <div className={styles.container}>
         <Head>
           <title>Jenosize Test 1</title>
