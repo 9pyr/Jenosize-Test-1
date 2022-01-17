@@ -13,7 +13,7 @@ const DatePicker = ({ value: initialValue, onChange, viewTab }) => {
     month = value.month(),
     year = value.year(),
     dateStr = `${year}-${month + 1}`,
-    nonOneDay = [constantTab.weekly].includes(viewTab)
+    nonOneDay = constantTab.weekly === viewTab
   const onChangeFnc = typeof onChange === 'function' ? onChange : () => {}
 
   const [holdOneDay, setHoldOneDay] = useState()
