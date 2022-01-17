@@ -35,7 +35,41 @@
   font-size: $font-medium;
 }
 .foot_comment {
+  display: flex;
   font-size: $font-small;
+  flex: 1;
+
+  .time_ago {
+    color: $color-gray;
+    margin-right: 4px;
+  }
+
+  .action_comment > button,
+  .icon_commentList,
+  .likes {
+    color: $color-primary;
+  }
+  .action_comment {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+
+    > button {
+      padding: 4px;
+      margin-left: 4px;
+      background: transparent;
+      border: none;
+      border-radius: $radius-card;
+
+      &:hover {
+        background: $color-primary-opc;
+      }
+    }
+  }
+
+  .icon_commentList {
+    width: 12px;
+  }
 }
 
 .comment_item {

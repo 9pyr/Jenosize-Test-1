@@ -8,12 +8,18 @@ import { faChevronRight, faGift } from '@fortawesome/free-solid-svg-icons'
 import { constantFormatDate } from 'helpers/constants'
 
 const DetailPost = (props) => {
-  const { post, user, onLikeClick } = props
+  const { post, user, onLikeClick, onPointClick } = props
 
   const handleUpdateLikePost = async () => {
     const { post_id } = post
     const { user_id, is_like_post } = user
     typeof onLikeClick === 'function' && !is_like_post && onLikeClick({ user_id, post_id })
+  }
+
+  const handleUpdatePointPost = async () => {
+    const { post_id } = post
+    const { user_id, is_point_post } = user
+    typeof onPointClick === 'function' && !is_point_post && onPointClick({ user_id, post_id })
   }
 
   return (
@@ -44,7 +50,7 @@ const DetailPost = (props) => {
         </button>
       </ul>
       <div className={styles.action_post}>
-        <button className={styles.button}>
+        <button className={`${styles.button} ${user.is_point_post ? styles.active : ''}`} onClick={handleUpdatePointPost}>
           <FontAwesomeIcon icon={faGift} className={styles.icon_detailPost} /> Give Point
         </button>
         <button className={`${styles.button} ${user.is_like_post ? styles.active : ''}`} onClick={handleUpdateLikePost}>

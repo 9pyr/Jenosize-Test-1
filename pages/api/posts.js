@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { findCommentByPostId, findLikesByPostId, findUserById } from '__mock/actions'
-import dataMock from '__mock/dataMock'
+import dataMock, { findCommentByPostId, findLikesByPostId, findUserById } from '__mock/actions'
 
 const { posts: initialPosts } = dataMock
 export default function handler(req, res) {
