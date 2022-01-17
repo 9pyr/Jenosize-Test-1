@@ -1,4 +1,4 @@
 import axios from 'axios'
 
-const local = `http://localhost:3000/`
+const local = process.env.PUBLIC_BASE_URL
 export default axios.create({ baseURL: local })
