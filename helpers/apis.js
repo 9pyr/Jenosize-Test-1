@@ -2,7 +2,7 @@ import callApi from './callApi'
 
 export const getPosts = async () => {
   try {
-    const { data } = await callApi.get(`api/posts`)
+    const { data } = await callApi.get(`/api/posts`)
 
     return data
   } catch (error) {
@@ -12,7 +12,7 @@ export const getPosts = async () => {
 }
 export const getPostById = async (id, user) => {
   try {
-    const { data } = await callApi.post(`api/post/${id}`, { user })
+    const { data } = await callApi.post(`/api/post/${id}`, { user })
 
     return data
   } catch (error) {
@@ -22,7 +22,7 @@ export const getPostById = async (id, user) => {
 }
 export const getLikePost = async ({ user_id, post_id, comment_id }) => {
   try {
-    const { status, data } = await callApi.post('api/like', { user_id, post_id, comment_id })
+    const { status, data } = await callApi.post('/api/like', { user_id, post_id, comment_id })
 
     return { status, data }
   } catch (error) {
@@ -32,7 +32,7 @@ export const getLikePost = async ({ user_id, post_id, comment_id }) => {
 }
 export const getPointPost = async ({ user_id, post_id }) => {
   try {
-    const { status, data } = await callApi.post('api/point', { user_id, post_id })
+    const { status, data } = await callApi.post('/api/point', { user_id, post_id })
 
     return { status, data }
   } catch (error) {
