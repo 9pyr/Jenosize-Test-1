@@ -29,6 +29,12 @@ const users = [
     position: 'Graphic Designer',
     company: 'BiNance',
   },
+  {
+    id: 9999,
+    name: 'Admin',
+    position: '',
+    company: '',
+  },
 ]
 
 const posts = [

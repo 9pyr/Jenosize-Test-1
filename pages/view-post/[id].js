@@ -3,13 +3,12 @@ import styles from 'styles/pages/ViewPost.module.scss'
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
-import { getLikePost, getPointPost, getPostById } from 'helpers/apis'
-import { DetailPost, CommentsList, TopNav } from 'components'
+import { getLikePost, getPointPost, getPostById, setComment } from 'helpers/apis'
+import { DetailPost, CommentsList, TopNav, Comment } from 'components'
 import { faChevronLeft, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 const ViewPost = (props) => {
   const [data, setDate] = useState(props)
-  console.log('🔥', data)
 
   const handleLikePost = async ({ user_id, post_id }) => {
     const { status } = await getLikePost({ user_id, post_id })
@@ -39,7 +38,6 @@ const ViewPost = (props) => {
     }
   }
   const handleLikeComment = async ({ comment_id }) => {
-    console.log('comment_id', comment_id)
     const { user_id } = user
     const { status, data } = await getLikePost({ user_id, comment_id })
 
@@ -53,6 +51,19 @@ const ViewPost = (props) => {
         prev.comments[indexComment] = newComment
 
         return { ...prev }
+      })
+    }
+  }
+  const handleCommentSubmit = async (value) => {
+    const { post_id } = props.post
+    const { status, data } = await setComment({ user_id: user.user_id, post_id, comment_detail: value.comment })
+
+    if (status === 200) {
+      setDate((prev) => {
+        return {
+          ...prev,
+          comments: [...prev.comments, data.comment],
+        }
       })
     }
   }
@@ -79,6 +90,7 @@ const ViewPost = (props) => {
           <CommentsList comments={data.comments} onLikeClick={handleLikeComment} />
         </main>
       </div>
+      <Comment onSubmit={handleCommentSubmit} />
     </>
   )
 }

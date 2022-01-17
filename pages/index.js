@@ -25,9 +25,7 @@ const filterList = (data, date) => {
 }
 
 const Home = ({ data = [] }) => {
-  console.log('🔥', { data })
   const store = useSelector((state) => state)
-  console.log({ store })
 
   const [activeType, setActiveType] = useState('like')
   const [values, setValues] = useState([])

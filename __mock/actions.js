@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import dataMock from './dataMock'
 
 const { posts: initialPosts, users: initialUsers, comments: initialComments, likes: initialLikes, points: initialPoints } = dataMock
@@ -62,7 +63,6 @@ export const findCommentByPostId = (post_id, user_id) =>
       const is_like = initialLikes.some((like) => like.user_id == user_id && like.comment_id == comment.id)
 
       // delete id user
-      delete comment.user_id
       delete user.id
       return { ...comment, ...user, count_likes: likes.length, is_like }
     })
@@ -100,4 +100,21 @@ export const createNewLikeComment = (user_id, comment_id) => {
   initialLikes.push({ id: lastId + 1, comment_id: Number(comment_id), user_id })
 
   return initialLikes
+}
+export const createNewComment = (user_id, post_id, comments_detail) => {
+  const lastId = initialComments[initialComments.length - 1]?.id || 0
+
+  initialComments.push({
+    id: lastId + 1,
+    post_id: Number(post_id),
+    user_id,
+    comments_detail,
+    update_date: dayjs().format('YYYY-MM-DD HH:mm'),
+  })
+  const user = findUserById(user_id) || {}
+  const likes = findLikesByCommentId(lastId + 1)
+
+  delete user.id
+
+  return { ...initialComments[initialComments.length - 1], count_likes: likes.length, ...user }
 }

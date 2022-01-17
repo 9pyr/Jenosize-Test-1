@@ -3,7 +3,7 @@ import styles from './CommentsList.module.scss'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faCommentAlt } from '@fortawesome/free-regular-svg-icons'
-import { faThumbsUp as faThumbsUpSolid } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp as faThumbsUpSolid, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
@@ -11,14 +11,13 @@ TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
 
 const CommentsList = ({ comments, onLikeClick }) => {
-  // console.log(comments)
 
   return (
     <div className={styles.comments_styled}>
       {comments.map((comment, index) => (
         <article key={index} className={styles.comment_item}>
           <div className={styles.head_comment}>
-            <div className={styles.profile_img}></div>
+            <FontAwesomeIcon icon={faUserCircle} className={styles.profile_img} />
             <div className={styles.title_detail}>
               <div>{comment.name}</div>
               <div>{comment.position}</div>

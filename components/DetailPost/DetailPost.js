@@ -4,7 +4,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faClock, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
-import { faChevronRight, faGift } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faGift, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { constantFormatDate } from 'helpers/constants'
 
 const DetailPost = (props) => {
@@ -25,7 +25,7 @@ const DetailPost = (props) => {
   return (
     <div className={styles.detailPost_styled}>
       <div className={styles.head_detail}>
-        <div className={styles.profile_img}></div>
+        <FontAwesomeIcon icon={faUserCircle} className={styles.profile_img} />
         <div className={styles.title_detail}>
           <div className={styles.name}>{post.user.name}</div>
           <div className={styles.post_date}>

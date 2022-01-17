@@ -50,15 +50,30 @@ const DateTabs = ({ value, onTabsChange, onViewChange, onDateChange }) => {
               />
             </div>
           </div>
+
           <div className={styles.date_list_section}>
-            <DateList
-              viewTab={value.tab}
-              value={dateSelect}
-              onChange={(date) => {
-                setDateSelect(date)
-                handleDateChange(date)
-              }}
-            />
+            {value.tab === constantTab.monthly ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  marginTop: '20px',
+                }}
+              >
+                {dayjs(dateSelect[0]).format('MMMM')}
+              </div>
+            ) : (
+              <DateList
+                viewTab={value.tab}
+                value={dateSelect}
+                onChange={(date) => {
+                  setDateSelect(date)
+                  handleDateChange(date)
+                }}
+              />
+            )}
             <div className={styles.date_today}>
               <button
                 onClick={() => {
@@ -77,7 +92,6 @@ const DateTabs = ({ value, onTabsChange, onViewChange, onDateChange }) => {
               <MonthPicker
                 value={dateSelect}
                 onChange={(date) => {
-                  console.log(date)
                   setDateSelect(date)
                   handleDateChange(date)
                 }}
@@ -87,7 +101,6 @@ const DateTabs = ({ value, onTabsChange, onViewChange, onDateChange }) => {
                 viewTab={value.tab}
                 value={dateSelect}
                 onChange={(date) => {
-                  console.log('🔥 datepicker', { date })
                   setDateSelect(date)
                   handleDateChange(date)
                 }}

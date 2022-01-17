@@ -1,0 +1,53 @@
+@import '../../styles/variables.scss';
+
+.comment_styled {
+  z-index: 100;
+  margin-top: 60px;
+
+  > div {
+    bottom: 0;
+    position: fixed;
+
+    display: flex;
+    width: 100%;
+    border-top: 1px solid $border-line-gray;
+    background: $bg-color-button;
+
+    padding: 10px 8px;
+  }
+}
+
+.options_comment {
+  display: flex;
+  padding: 2px;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+
+    > .icon {
+      color: $color-gray;
+      transition: color $animation-speed;
+    }
+
+    &:hover > .icon {
+      color: $color-primary;
+    }
+  }
+}
+.comment_input {
+  display: flex;
+  width: 100%;
+
+  > input {
+    flex: 1;
+    border-radius: $radius-card;
+    border: 1px solid $border-line-gray;
+    padding: 0 8px;
+  }
+}
