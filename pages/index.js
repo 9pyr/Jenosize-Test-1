@@ -8,7 +8,7 @@ import { BottomNav, TabsNav, TopNav } from 'components'
 import { constantFormatDate, constantTab } from 'helpers/constants'
 import { tabsNavRouteList } from 'helpers/routesConstant'
 import { useSelector } from 'react-redux'
-import { getPosts } from 'helpers/apis'
+import { getPosts } from 'helpers/actions/apis'
 import { faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 
 const sortCountList = (data, activePage) => {
@@ -19,13 +19,15 @@ const filterList = (data, date) => {
   const { start, end } = Array.isArray(date) ? { start: date[0], end: date[1] } : { start: date, end: date }
   return data.filter((item) => {
     const update_date = dayjs(item.update_date).format(constantFormatDate.default)
-    // console.log({ update_date, start, end })
     return update_date >= start && update_date <= end
   })
 }
 
-const Home = ({ data = [] }) => {
-  const store = useSelector((state) => state)
+const Home = () => {
+  const { posts, date, tab } = useSelector((state) => {
+    const posts = getPosts(state.dataStorage.posts)
+    return { ...state, posts }
+  })
 
   const [activeType, setActiveType] = useState('like')
   const [values, setValues] = useState([])
@@ -37,13 +39,13 @@ const Home = ({ data = [] }) => {
   }
 
   useEffect(() => {
-    const valuesFilter = filterList(data, store.date)
-    if (store.tab === constantTab.daily) {
+    const valuesFilter = filterList(posts, date)
+    if (tab === constantTab.daily) {
       setValues(valuesFilter)
     } else {
       setValues(sortCountList(valuesFilter, activeType))
     }
-  }, [data.length, store.date])
+  }, [posts.length, date])
 
   return (
     <>
@@ -59,7 +61,7 @@ const Home = ({ data = [] }) => {
         <DateOptions />
 
         <main className={styles.main}>
-          {store.tab === constantTab.daily ? (
+          {tab === constantTab.daily ? (
             <Cards dataSource={values[0]} />
           ) : (
             <React.Fragment>
@@ -72,12 +74,6 @@ const Home = ({ data = [] }) => {
       <BottomNav />
     </>
   )
-}
-
-Home.getInitialProps = async () => {
-  const data = await getPosts()
-
-  return { data }
 }
 
 export default Home

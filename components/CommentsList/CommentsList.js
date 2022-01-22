@@ -1,6 +1,6 @@
 import styles from './CommentsList.module.scss'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faCommentAlt } from '@fortawesome/free-regular-svg-icons'
 import { faThumbsUp as faThumbsUpSolid, faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +10,12 @@ import en from 'javascript-time-ago/locale/en.json'
 TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
 
-const CommentsList = ({ comments, onLikeClick }) => {
+const CommentsList = ({ comments: commentsProps, onLikeClick }) => {
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    setComments(commentsProps)
+  }, [commentsProps])
 
   return (
     <div className={styles.comments_styled}>

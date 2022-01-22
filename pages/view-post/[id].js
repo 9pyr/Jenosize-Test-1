@@ -1,77 +1,39 @@
 import styles from 'styles/pages/ViewPost.module.scss'
 
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
-import { getLikePost, getPointPost, getPostById, setComment } from 'helpers/apis'
+import { putLikePost, putPointPost, getPostById, setComment, updateView } from 'helpers/actions/apis'
 import { DetailPost, CommentsList, TopNav, Comment } from 'components'
 import { faChevronLeft, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux'
 
-const ViewPost = (props) => {
-  const [data, setDate] = useState(props)
+const ViewPost = ({ id }) => {
+  const { post = {}, user = {}, comments } = useSelector(() => getPostById(id, initialUser))
 
-  const handleLikePost = async ({ user_id, post_id }) => {
-    const { status } = await getLikePost({ user_id, post_id })
-
-    if (status === 200) {
-      setDate((prev) => {
-        const { post, user } = prev
-        return {
-          ...prev,
-          post: { ...post, count_likes: post.count_likes + 1 },
-          user: { ...user, is_like_post: true },
-        }
-      })
-    }
+  const handleLikePost = ({ user_id, post_id }) => {
+    putLikePost({ user_id, post_id })
   }
-  const handlePointPost = async ({ user_id, post_id }) => {
-    const { status } = await getPointPost({ user_id, post_id })
-
-    if (status === 200) {
-      setDate((prev) => {
-        const { user } = prev
-        return {
-          ...prev,
-          user: { ...user, is_point_post: true },
-        }
-      })
-    }
+  const handlePointPost = ({ user_id, post_id }) => {
+    putPointPost({ user_id, post_id })
   }
-  const handleLikeComment = async ({ comment_id }) => {
+  const handleLikeComment = ({ comment_id }) => {
     const { user_id } = user
-    const { status, data } = await getLikePost({ user_id, comment_id })
-
-    if (status === 200 && !data.isLike) {
-      setDate((prev) => {
-        const indexComment = prev.comments.findIndex((item) => item.id == comment_id)
-        const newComment = { ...prev.comments[indexComment] }
-        newComment.count_likes += 1
-        newComment.is_like = true
-
-        prev.comments[indexComment] = newComment
-
-        return { ...prev }
-      })
-    }
+    putLikePost({ user_id, comment_id })
   }
-  const handleCommentSubmit = async (value) => {
-    const { post_id } = props.post
-    const { status, data } = await setComment({ user_id: user.user_id, post_id, comment_detail: value.comment })
-
-    if (status === 200) {
-      setDate((prev) => {
-        return {
-          ...prev,
-          comments: [...prev.comments, data.comment],
-        }
-      })
-    }
+  const handleCommentSubmit = (value) => {
+    const { post_id } = post
+    setComment({ user_id: user.user_id, post_id, comment_detail: value.comment })
   }
+
+  useEffect(() => {
+    updateView(id)
+  }, [id])
 
   return (
     <>
       <TopNav
-        title={'Okr'}
+        title={'Report'}
         leftIcon={faChevronLeft}
         textLeft='Back'
         classNameLeft={styles.custom_icon_left_nav}
@@ -86,8 +48,8 @@ const ViewPost = (props) => {
         </Head>
 
         <main>
-          <DetailPost post={data.post} user={data.user} onLikeClick={handleLikePost} onPointClick={handlePointPost} />
-          <CommentsList comments={data.comments} onLikeClick={handleLikeComment} />
+          <DetailPost post={post} user={user} onLikeClick={handleLikePost} onPointClick={handlePointPost} />
+          <CommentsList comments={comments} onLikeClick={handleLikeComment} />
         </main>
       </div>
       <Comment onSubmit={handleCommentSubmit} />
@@ -96,10 +58,9 @@ const ViewPost = (props) => {
 }
 
 ViewPost.getInitialProps = async (ctx) => {
-  const data = await getPostById(ctx.query.id, user)
-  return data
+  return { id: ctx.query.id }
 }
 
 export default ViewPost
 
-const user = { user_id: 9999 } // user mock
+const initialUser = { user_id: 9999 } // user mock

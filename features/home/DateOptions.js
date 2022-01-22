@@ -3,7 +3,7 @@ import styles from 'styles/pages/Home.module.scss'
 import React from 'react'
 import { DateTabs } from 'components'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeTab, changeView, changeDate } from 'helpers/actions/storeHomePage'
+import { changeTab, changeView, changeDate } from 'helpers/actions/store'
 
 const DateOptions = () => {
   const store = useSelector((state) => state)

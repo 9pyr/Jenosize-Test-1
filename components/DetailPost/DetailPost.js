@@ -1,6 +1,6 @@
 import styles from './DetailPost.module.scss'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faClock, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
@@ -8,7 +8,9 @@ import { faChevronRight, faGift, faUserCircle } from '@fortawesome/free-solid-sv
 import { constantFormatDate } from 'helpers/constants'
 
 const DetailPost = (props) => {
-  const { post, user, onLikeClick, onPointClick } = props
+  const { post: postProps, user: userProps, onLikeClick, onPointClick } = props
+
+  const [{ post, user }, setPostState] = useState({ post: {}, user: {} })
 
   const handleUpdateLikePost = async () => {
     const { post_id } = post
@@ -22,17 +24,21 @@ const DetailPost = (props) => {
     typeof onPointClick === 'function' && !is_point_post && onPointClick({ user_id, post_id })
   }
 
+  useEffect(() => {
+    setPostState({ post: postProps, user: userProps })
+  }, [postProps, userProps])
+
   return (
     <div className={styles.detailPost_styled}>
       <div className={styles.head_detail}>
         <FontAwesomeIcon icon={faUserCircle} className={styles.profile_img} />
         <div className={styles.title_detail}>
-          <div className={styles.name}>{post.user.name}</div>
+          <div className={styles.name}>{post.user?.name}</div>
           <div className={styles.post_date}>
             <FontAwesomeIcon icon={faCalendarAlt} className={styles.icon_detailPost} />
             {dayjs(post.update_date).format(constantFormatDate.ddmmyyyy_slh)}
           </div>
-          <div className={styles.position}>{post.user.position}</div>
+          <div className={styles.position}>{post.user?.position}</div>
           <div className={styles.post_time}>
             <FontAwesomeIcon icon={faClock} className={styles.icon_detailPost} />
             {dayjs(post.update_date).format(constantFormatDate.time)}

@@ -1,11 +1,21 @@
 import 'styles/globals.scss'
 
-import storeHomePage from 'helpers/actions/storeHomePage'
+import store, { setDataStorage } from 'helpers/actions/store'
+import dataMock from '__mock/dataMock'
 import { Provider } from 'react-redux'
+import { useEffect } from 'react'
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !sessionStorage.getItem('dataStorage')) {
+      sessionStorage.setItem('dataStorage', JSON.stringify(dataMock))
+
+      store.dispatch(setDataStorage(dataMock))
+    }
+  }, [])
+
   return (
-    <Provider store={storeHomePage}>
+    <Provider store={store}>
       <Component {...pageProps} />
     </Provider>
   )
