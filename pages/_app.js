@@ -8,8 +8,6 @@ import { useEffect } from 'react'
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (typeof window !== 'undefined' && !sessionStorage.getItem('dataStorage')) {
-      sessionStorage.setItem('dataStorage', JSON.stringify(dataMock))
-
       store.dispatch(setDataStorage(dataMock))
     }
   }, [])

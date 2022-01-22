@@ -96,10 +96,7 @@ export const updatePostDataById = (post_id, key, value) => {
 
   if (postIndex < 0) return {}
 
-  const newPost = { ...initialPosts[postIndex], [key]: value }
-
-  store.dispatch(setPostData({ postIndex, newPost }))
-  return newPost
+  store.dispatch(setPostData({ index: postIndex, value: { ...initialPosts[postIndex], [key]: value } }))
 }
 export const createNewLikePost = (user_id, post_id) => {
   const { likes: initialLikes = [] } = getState()
@@ -108,7 +105,7 @@ export const createNewLikePost = (user_id, post_id) => {
   if (hasLike) return
 
   const lastId = initialLikes[initialLikes.length - 1]?.id || 0
-  return store.dispatch(setLike({ id: lastId + 1, post_id: Number(post_id), user_id })).payload
+  store.dispatch(setLike({ id: lastId + 1, post_id: Number(post_id), user_id }))
 }
 export const createNewPointPost = (user_id, post_id) => {
   const { points: initialPoints = [] } = getState()
@@ -117,7 +114,7 @@ export const createNewPointPost = (user_id, post_id) => {
   if (hasPoint) return
 
   const lastId = initialPoints[initialPoints.length - 1]?.id || 0
-  return store.dispatch(setPoint({ id: lastId + 1, post_id: Number(post_id), user_id })).payload
+  store.dispatch(setPoint({ id: lastId + 1, post_id: Number(post_id), user_id }))
 }
 export const createNewLikeComment = (user_id, comment_id) => {
   const { likes: initialLikes = [] } = getState()
@@ -126,13 +123,13 @@ export const createNewLikeComment = (user_id, comment_id) => {
   if (hasPoint) return
 
   const lastId = initialLikes[initialLikes.length - 1]?.id || 0
-  return store.dispatch(setLike({ id: lastId + 1, comment_id: Number(comment_id), user_id })).payload
+  store.dispatch(setLike({ id: lastId + 1, comment_id: Number(comment_id), user_id }))
 }
 export const createNewComment = (user_id, post_id, comments_detail) => {
   const { comments: initialComments = [] } = getState()
 
   const lastId = initialComments[initialComments.length - 1]?.id || 0
-  return store.dispatch(
+  store.dispatch(
     setComment({
       id: lastId + 1,
       post_id: Number(post_id),
@@ -140,5 +137,5 @@ export const createNewComment = (user_id, post_id, comments_detail) => {
       comments_detail,
       update_date: dayjs().format('YYYY-MM-DD HH:mm'),
     })
-  ).payload
+  )
 }

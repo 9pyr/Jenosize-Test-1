@@ -27,7 +27,7 @@ const ViewPost = ({ id }) => {
   }
 
   useEffect(() => {
-    updateView(id)
+    return () => updateView(id)
   }, [id])
 
   return (
