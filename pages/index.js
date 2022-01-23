@@ -11,18 +11,6 @@ import { useSelector } from 'react-redux'
 import { getPosts } from 'helpers/actions/apis'
 import { faHome, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 
-const sortCountList = (data, activePage) => {
-  const fieldCount = `count_${activePage}s`
-  return data.sort((a, b) => new Date(b.update_date).getTime() - new Date(a.update_date).getTime() && b[fieldCount] - a[fieldCount])
-}
-const filterList = (data, date) => {
-  const { start, end } = Array.isArray(date) ? { start: date[0], end: date[1] } : { start: date, end: date }
-  return data.filter((item) => {
-    const update_date = dayjs(item.update_date).format(constantFormatDate.default)
-    return update_date >= start && update_date <= end
-  })
-}
-
 const Home = () => {
   const { posts, date, tab } = useSelector((state) => {
     const posts = getPosts(state.dataStorage.posts)
@@ -34,17 +22,11 @@ const Home = () => {
 
   const handleTag = (e, activePage) => {
     setActiveType(activePage)
-
-    setValues(sortCountList(values, activePage))
   }
 
   useEffect(() => {
     const valuesFilter = filterList(posts, date)
-    if (tab === constantTab.daily) {
-      setValues(valuesFilter)
-    } else {
-      setValues(sortCountList(valuesFilter, activeType))
-    }
+    setValues(valuesFilter)
   }, [posts.length, date])
 
   return (
@@ -77,3 +59,11 @@ const Home = () => {
 }
 
 export default Home
+
+const filterList = (data, date) => {
+  const { start, end } = Array.isArray(date) ? { start: date[0], end: date[1] } : { start: date, end: date }
+  return data.filter((item) => {
+    const update_date = dayjs(item.update_date).format(constantFormatDate.default)
+    return update_date >= start && update_date <= end
+  })
+}

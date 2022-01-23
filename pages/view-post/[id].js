@@ -24,6 +24,8 @@ const ViewPost = ({ id }) => {
   const handleCommentSubmit = (value) => {
     const { post_id } = post
     setComment({ user_id: user.user_id, post_id, comment_detail: value.comment })
+
+    setTimeout(() => scrollTo({ top: document.body.clientHeight }), 100)
   }
 
   useEffect(() => {
